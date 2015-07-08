@@ -1,42 +1,90 @@
-    
-        BC      Feb,      April,  June
-        Cons = [27.96, 34.13,27]
-        Lib  = [38,29.3,23.5]
-        NDP = [21.73,21.96,40]
-        Green = [9.63,13.53,9.5]
 
-        AB      Feb,      April,  June
         
+        
+// party colours
+var conBlue = '#0071BC';
+var ndpOrng = '#F7931E';
+var libRed  = '#FF0000';
+var bqBlue  = '#00FFFF';
+var grnGrn  = '#006837';
+var neutralColor = '#F7E3A4';
+
+//  BC
+var ConVotes = [27.96, 34.13,27];
+var LibVotes  = [38,29.3,23.5];
+var NDPVotes = [21.73,21.96,40];
+var GrnVotes = [9.63,13.53,9.5];
+var titleOfChart = "British Columbia";
+
+//  Alberta
+var ConVotes = [56.5, 47.8,44.0];
+var LibVotes  = [22.6,22.3,17.0];
+var NDPVotes = [13.2,21.7,34.0];
+var GrnVotes = [5.3,13.5,5.0];
+var titleOfChart = "Alberta";
+
+//  Sask/Man
+var ConVotes = [43.7, 40.7,33.5];
+var LibVotes  = [34.7,35.0,28.5];
+var NDPVotes = [16.7,18.0,33.0];
+var GrnVotes = [4.3,6.0,5.0];
+var titleOfChart = "Saskatchewan and Manitoba";
+
+//  Ontario
+var ConVotes = [37.5, 35.7,32.0];
+var LibVotes  = [38.1,33.1,32.0];
+var NDPVotes = [16.7,25.2,31.0];
+var GrnVotes = [5.8,5.1,5.0];
+var titleOfChart = "Ontario";
+
+//  Quebec
 
 
+function DrawTheChart(ChartData,ChartOptions,ChartId,ChartType){
+eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).'+ChartType+'(ChartData,ChartOptions);document.getElementById(ChartId).getContext("2d").stroke();')
+}
 
-        function DrawTheChart(ChartData, ChartOptions, ChartId, ChartType) 
-        {
-            eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).' + ChartType + '(ChartData,ChartOptions);
-            document.getElementById(ChartId).getContext("2d").stroke();')
-        }
+        
     
         function MoreChartOptions() {}
         var ChartData = {
-            labels: ["January",
-                "February", "April", "June", 
+            labels: [
+                "February", "April", "June"
             ],
             datasets: [{
-                fillColor: "rgba(37,116,168,0.1)",
-                strokeColor: "rgba(37,116,168,1)",
-                pointColor: "rgba(37,116,168,1)",
-                markerShape: "circle",
-                pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: [65, 8, 90, 81, 56, 55, 40, ],
-                title: "2013"
+                //fillColor: conBlue,//"rgba(37,116,168,0.1)",
+                strokeColor: conBlue,//"rgba(37,116,168,1)"
+                //pointColor: "rgba(37,116,168,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: ConVotes,
+                title: "Conservative"
             }, {
-                fillColor: "rgba(204,46,59,0.1)",
-                strokeColor: "rgba(204,46,59,1)",
-                pointColor: "rgba(204,46,59,1)",
-                markerShape: "circle",
-                pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: [21, 48, 40, 19, 96, 27, 100, ],
-                title: "2014"
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: libRed,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: LibVotes,
+                title: "Liberal"
+            },
+            {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: ndpOrng,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: NDPVotes,
+                title: "NDP"
+            },
+            {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: grnGrn,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: GrnVotes,
+                title: "Green"
             }, ]
         };
 
@@ -96,14 +144,14 @@
             yAxisRight: false,
             graphTitleSpaceBefore: 5,
             graphTitleSpaceAfter: 5,
-            graphTitle: "Chart Title",
+            graphTitle: titleOfChart,//"Chart Title",
             graphTitleFontFamily: "'Open Sans'",
             graphTitleFontStyle: "normal normal",
             graphTitleFontColor: "rgba(52,152,219,1)",
             graphTitleFontSize: 26,
             graphSubTitleSpaceBefore: 0,
             graphSubTitleSpaceAfter: 5,
-            graphSubTitle: "Add SubTitle Here",
+            graphSubTitle: "Average of polls from Election Almanac",
             graphSubTitleFontFamily: "'Open Sans'",
             graphSubTitleFontStyle: "normal normal",
             graphSubTitleFontColor: "rgba(102,102,102,1)",
