@@ -1,0 +1,162 @@
+/*
+Theme Name: Flat Bootstrap Child
+Theme URI: http://xtremelysocial.com/wordpress/child/
+Description: Child theme for Flat Bootstrap. Includes a stylesheet (style.css) for you to restyle any of the CSS and a functions.php file to change theme parameters or components. Both files include samples of a few common things you might want to do.
+Author: XtremelySocial
+Author url: http://xtremelysocial.com
+Version: 1.4
+License: GNU General Public License
+License URI: http://www.opensource.org/licenses/GPL-3.0
+Template: flat-bootstrap
+Template Version: 1.4
+Tags: one-column, right-sidebar, left-sidebar, fluid-layout, responsive-layout, custom-header, custom-menu, featured-images, featured-image-header, full-width-template, flexible-header, theme-options, sticky-post, threaded-comments, light, translation-ready, rtl-language-support, custom-background
+*/
+
+/* Include the parent theme's stylesheet(s). Then anything you change below that will
+ * override those styles. If you'd rather start from scratch, you can comment out this
+ * next line.
+ */
+@import url("../flat-bootstrap/style.css");
+
+/* PUT YOUR CHANGED STYLES HERE 
+ * 
+ * The best way to do this is to copy in the relevant section from the parent's style.css
+ * file, change what you want, and remove the lines that you didn't change.
+*/
+
+/* Make the buttons square. This is just an example, remove it if you want. 
+.btn {
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	border-radius: 0 !important;
+}*/
+
+/* Change the content header to dark blue. This is just an example. */
+.content-header {
+	background-color: #2980b9;
+}
+
+/* PUT ANY NEW STYLES TO USE IN YOUR CONTENT AREAS HERE SO YOU CAN EASILY PASTE THIS
+ * SECTION IF YOU CHANGE THEMES
+ */
+
+/*
+
+
+        Below are custom styles
+  
+
+The Party Colours:
+
+NDP #F7931E
+Con #0071BC
+BQ  #00FFFF
+LIB #FF0000
+GRN #006837
+
+*/
+
+
+.quickLink{
+  margin: 0;
+  padding: 0;
+}
+
+a:hover,a:focus,a:active{
+  color: #16473D;
+}
+h2 a{
+  color:#16a085;
+}
+
+.top-section{
+    padding-top: 0;
+  padding-bottom: 35px;
+}
+
+
+ aside{
+ 	background-color: #F7E3A4;
+ }
+
+ .btn-primary {
+  color: #fff;
+  background-color: #BAAB7F;
+  border-color: #BAAB7F;
+}
+.btn-primary:hover,.btn-primary:active,.btn-primary:focus {
+  color: #333;
+  background-color: #E5DBBE;
+  border-color: #BAAB7F;
+}
+
+.initiallyHidden { display: none; }
+
+.pie-charts{
+  background-color: #f9f9f9;
+}
+
+.pie-chart{
+  padding: 20px;
+  margin: 0 10px 0 -20px;
+}
+
+.ridingPageTitle{
+  font-weight: bold;
+  color: #16a085;
+  margin-top: 0;
+
+}
+
+.comment-body{
+  background-color: white;
+  color: #000;
+  padding: 1em 1em 0.2em;
+  margin-bottom: 1em;
+}
+
+
+
+.hvr-push {
+  /*display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;*/
+  color: #16a085;
+}
+.hvr-push:hover, .hvr-push:focus, .hvr-push:active {
+  /*-webkit-animation-name: hvr-push;
+  animation-name: hvr-push;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;*/
+  color: #16473D;
+  cursor: pointer;
+}
+
+.yellowBackground{
+  background-color: #F7E3A4;
+}
+
+// comments
+footer > div.comment-metadata > span{
+  float: right;
+}
+
+.comment-metadata {
+  float: right !important;
+ }
+.safe-comments-report-link a  {
+  float: right;
+  color:red !important;
+  font-size: 0.6em;
+}
+
+
