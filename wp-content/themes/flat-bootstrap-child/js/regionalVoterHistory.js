@@ -1,3 +1,14 @@
+    
+        BC      Feb,      April,  June
+        Cons = [27.96, 34.13,27]
+        Lib  = [38,29.3,23.5]
+        NDP = [21.73,21.96,40]
+        Green = [9.63,13.53,9.5]
+
+        AB      Feb,      April,  June
+        
+
+
 
         function DrawTheChart(ChartData, ChartOptions, ChartId, ChartType) 
         {
