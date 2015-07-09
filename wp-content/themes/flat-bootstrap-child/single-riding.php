@@ -52,8 +52,29 @@ get_header(); ?>
 			
 			
 <!-- Title and preliminary recomendation -->
-	<div class="row clearfix" >
-		<div class="col-md-12  pie-charts  centered " id="df_riding_header">
+	<div class="row clearfix title-area" >
+		<div class="col-md-3  centered" >
+			
+			<?php 
+			if ( is_user_logged_in() ) 
+				{ ?>
+			<?php echo '<a href=" '. admin_url() .' ">Have you been asking people how they intend to vote? click here.</a>'; ?>
+			<?php }
+
+			else
+			{
+				echo '<a href=" '.  wp_login_url( get_permalink() ) .' " title="Login">Login/Register</a>';
+			}
+			?>
+
+			
+			
+		</div>
+
+
+
+
+		<div class="col-md-6  pie-charts  centered " id="df_riding_header">
 			<div class="ridingHeader">
 			<p>Your riding is</p>
 			<h1 class="ridingPageTitle"><?php echo get_the_title();//DH_Riding_Page::get_instance()->myRiding->new_name$DH_Riding_Page->myRiding->new_name ?></h1>
@@ -63,6 +84,10 @@ get_header(); ?>
 			<p>It is still early. Things may change. They often do.</p>
 			</div><!-- ridingHeader -->
 		</div><!-- col-lg-12 -->
+		<div class="col-md-3  centered" >
+			map goes here.
+		</div>
+
 	</div><!-- row -->
 
 

@@ -38,7 +38,12 @@ var GrnVotes = [5.8,5.1,5.0];
 var titleOfChart = "Ontario";
 
 //  Quebec
-
+var ConVotes = [20.3, 14.7,13.0];
+var LibVotes  = [25.6,25.6,23.5];
+var NDPVotes = [29.9,38.3,35.5];
+var GrnVotes = [4.3,3.5,4.0];
+var BlocVotes = [19.0,16.6,24.0];
+var titleOfChart = "Quebec";
 
 function DrawTheChart(ChartData,ChartOptions,ChartId,ChartType){
 eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).'+ChartType+'(ChartData,ChartOptions);document.getElementById(ChartId).getContext("2d").stroke();')
@@ -85,7 +90,16 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
                 //pointStrokeColor: "rgba(255,255,255,1.00)",
                 data: GrnVotes,
                 title: "Green"
-            }, ]
+            },
+            {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: bqBlue,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: BlocVotes,
+                title: "Bloc"
+            },]
         };
 
         ChartOptions = {
@@ -95,7 +109,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             spaceTop: 12,
             spaceBottom: 12,
             canvasBorders: false,
-            canvasBordersWidth: 1,
+            canvasBordersWidth: 0,
             canvasBordersStyle: "solid",
             canvasBordersColor: "rgba(0,0,0,1)",
             yAxisMinimumInterval: 'none',
@@ -113,7 +127,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             maxLegendCols: 5,
             legendBlockSize: 15,
             legendFillColor: 'rgba(255,255,255,0.00)',
-            legendColorIndicatorStrokeWidth: 1,
+            legendColorIndicatorStrokeWidth: 2,
             legendPosX: -2,
             legendPosY: 4,
             legendXPadding: 0,
@@ -144,14 +158,14 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             yAxisRight: false,
             graphTitleSpaceBefore: 5,
             graphTitleSpaceAfter: 5,
-            graphTitle: titleOfChart,//"Chart Title",
+            graphTitle: titleOfChart,
             graphTitleFontFamily: "'Open Sans'",
             graphTitleFontStyle: "normal normal",
             graphTitleFontColor: "rgba(52,152,219,1)",
             graphTitleFontSize: 26,
             graphSubTitleSpaceBefore: 0,
             graphSubTitleSpaceAfter: 5,
-            graphSubTitle: "Average of polls from Election Almanac",
+            graphSubTitle: "Rough average of polls from Election Almanac",
             graphSubTitleFontFamily: "'Open Sans'",
             graphSubTitleFontStyle: "normal normal",
             graphSubTitleFontColor: "rgba(102,102,102,1)",
@@ -180,7 +194,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             segmentStrokeWidth: 2,
             segmentStrokeColor: "rgba(255,255,255,1.00)",
             datasetStroke: true,
-            datasetFill: true,
+            datasetFill: false,
             datasetStrokeStyle: "solid",
             datasetStrokeWidth: 2,
             bezierCurve: true,
@@ -188,7 +202,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             pointDotStrokeStyle: "solid",
             pointDotStrokeWidth: 1,
             pointDotRadius: 3,
-            pointDot: true,
+            pointDot: false,
             barShowStroke: false,
             barBorderRadius: 0,
             barStrokeStyle: "solid",
@@ -196,10 +210,14 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             barValueSpacing: 15,
             barDatasetSpacing: 0,
             scaleShowLabelBackdrop: true,
-            scaleBackdropColor: 'rgba(255,255,255,0.75)',
+            scaleBackdropColor: 'rgba(255,255,255,0.01)',
             scaleBackdropPaddingX: 2,
             scaleBackdropPaddingY: 2,
             animation: true,
+            //responsive settings:
+            responsive:true,
+            maintainAspectRatio : true,
+            responsiveMinWidth : 150,
             onAnimationComplete: function() {
                 MoreChartOptions()
             }
