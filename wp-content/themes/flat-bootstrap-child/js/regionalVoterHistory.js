@@ -9,41 +9,42 @@ var bqBlue  = '#00FFFF';
 var grnGrn  = '#006837';
 var neutralColor = '#F7E3A4';
 
-//  BC
-var ConVotes = [27.96, 34.13,27];
-var LibVotes  = [38,29.3,23.5];
-var NDPVotes = [21.73,21.96,40];
-var GrnVotes = [9.63,13.53,9.5];
-var titleOfChart = "British Columbia";
+// //  BC
+// var ConVotes = [27.96, 34.13,27];
+// var LibVotes  = [38,29.3,23.5];
+// var NDPVotes = [21.73,21.96,40];
+// var GrnVotes = [9.63,13.53,9.5];
+// var titleOfChart = "British Columbia";
 
-//  Alberta
-var ConVotes = [56.5, 47.8,44.0];
-var LibVotes  = [22.6,22.3,17.0];
-var NDPVotes = [13.2,21.7,34.0];
-var GrnVotes = [5.3,13.5,5.0];
-var titleOfChart = "Alberta";
+// //  Alberta
+// var ConVotes = [56.5, 47.8,44.0];
+// var LibVotes  = [22.6,22.3,17.0];
+// var NDPVotes = [13.2,21.7,34.0];
+// var GrnVotes = [5.3,13.5,5.0];
+// var titleOfChart = "Alberta";
 
-//  Sask/Man
-var ConVotes = [43.7, 40.7,33.5];
-var LibVotes  = [34.7,35.0,28.5];
-var NDPVotes = [16.7,18.0,33.0];
-var GrnVotes = [4.3,6.0,5.0];
-var titleOfChart = "Saskatchewan and Manitoba";
+// //  Sask/Man
+// var ConVotes = [43.7, 40.7,33.5];
+// var LibVotes  = [34.7,35.0,28.5];
+// var NDPVotes = [16.7,18.0,33.0];
+// var GrnVotes = [4.3,6.0,5.0];
+// var titleOfChart = "Saskatchewan and Manitoba";
 
-//  Ontario
-var ConVotes = [37.5, 35.7,32.0];
-var LibVotes  = [38.1,33.1,32.0];
-var NDPVotes = [16.7,25.2,31.0];
-var GrnVotes = [5.8,5.1,5.0];
-var titleOfChart = "Ontario";
+// //  Ontario
+// var ConVotes = [37.5, 35.7,32.0];
+// var LibVotes  = [38.1,33.1,32.0];
+// var NDPVotes = [16.7,25.2,31.0];
+// var GrnVotes = [5.8,5.1,5.0];
+// var titleOfChart = "Ontario";
 
-//  Quebec
-var ConVotes = [20.3, 14.7,13.0];
-var LibVotes  = [25.6,25.6,23.5];
-var NDPVotes = [29.9,38.3,35.5];
-var GrnVotes = [4.3,3.5,4.0];
-var BlocVotes = [19.0,16.6,24.0];
-var titleOfChart = "Quebec";
+// //  Quebec
+// var ConVotes = [20.3, 14.7,13.0];
+// var LibVotes  = [25.6,25.6,23.5];
+// var NDPVotes = [29.9,38.3,35.5];
+// var GrnVotes = [4.3,3.5,4.0];
+// var BlocVotes = [19.0,16.6,24.0];
+// var titleOfChart = "Quebec";
+
 
 function DrawTheChart(ChartData,ChartOptions,ChartId,ChartType){
 eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).'+ChartType+'(ChartData,ChartOptions);document.getElementById(ChartId).getContext("2d").stroke();')
@@ -62,7 +63,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
                 //pointColor: "rgba(37,116,168,1)",
                 //markerShape: "circle",
                 //pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: ConVotes,
+                data: voterHistory.ConVotes,
                 title: "Conservative"
             }, {
                 //fillColor: "rgba(204,46,59,0.1)",
@@ -70,7 +71,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
                 //pointColor: "rgba(204,46,59,1)",
                 //markerShape: "circle",
                 //pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: LibVotes,
+                data: voterHistory.LibVotes,
                 title: "Liberal"
             },
             {
@@ -79,7 +80,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
                 //pointColor: "rgba(204,46,59,1)",
                 //markerShape: "circle",
                 //pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: NDPVotes,
+                data: voterHistory.NDPVotes,
                 title: "NDP"
             },
             {
@@ -88,7 +89,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
                 //pointColor: "rgba(204,46,59,1)",
                 //markerShape: "circle",
                 //pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: GrnVotes,
+                data: voterHistory.GrnVotes,
                 title: "Green"
             },
             {
@@ -97,7 +98,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
                 //pointColor: "rgba(204,46,59,1)",
                 //markerShape: "circle",
                 //pointStrokeColor: "rgba(255,255,255,1.00)",
-                data: BlocVotes,
+                data: voterHistory.BlocVotes,
                 title: "Bloc"
             },]
         };
@@ -158,7 +159,7 @@ eval('var myLine = new Chart(document.getElementById(ChartId).getContext("2d")).
             yAxisRight: false,
             graphTitleSpaceBefore: 5,
             graphTitleSpaceAfter: 5,
-            graphTitle: titleOfChart,
+            graphTitle: voterHistory.titleOfChart,
             graphTitleFontFamily: "'Open Sans'",
             graphTitleFontStyle: "normal normal",
             graphTitleFontColor: "rgba(52,152,219,1)",

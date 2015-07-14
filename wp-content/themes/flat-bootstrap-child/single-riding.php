@@ -58,7 +58,7 @@ get_header(); ?>
 			<?php 
 			if ( is_user_logged_in() ) 
 				{ ?>
-			<?php echo '<a href=" '. admin_url() .' ">Have you been asking people how they intend to vote? click here.</a>'; ?>
+			<?php echo '<a href=" '. get_site_url().'/voter-survey/' .' ">Have you been asking people how they intend to vote? click here.</a>'; ?>
 			<?php }
 
 			else
@@ -116,13 +116,27 @@ get_header(); ?>
 			
 	</div><!-- row -->
 <div class="row section  clearfix pie-charts">
+	<div class="col-md-12 center-block" >
+
+	<?php echo FrmFormsController::get_form_shortcode( array( 'id' => 7, 'title' => true, 'description' => false ) ); ?>	
+	</div>
+</div>
+
+<div class="row section  clearfix pie-charts">
 		<!-- <h2 >Most Canadians did not vote for Stephen Harper's Conservatives</h2> 
 		<br/>-->
 			<div class="col-md-12 center-block" >
-				
-				<canvas id="voter-history-chart" class="pie-chart" height="400" width="700"  ></canvas>
+			<?php if( isset(DH_Riding_Page::get_instance()->noRegionalChart) )
+			{
+				echo DH_Riding_Page::get_instance()->noRegionalChart;
+			} 
+			else
+			{
+
+				echo '<canvas id="voter-history-chart" class="pie-chart" height="400" width="700"  ></canvas>';
+				?>
 				<p style= "text-align: left;"><?php echo DH_Riding_Page::get_instance()->shortRecomendation; ?> </p>
-				
+			<?php } ?>
 			</div>
 
 			

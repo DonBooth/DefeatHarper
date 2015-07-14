@@ -53,7 +53,7 @@ if(!class_exists('DH_Riding_Page'))
 		public $winningMarginPercent;
 		public $shortRecomendation;
 		public $pieChartCaption;
-		public $analysis2;// = 'temp value - variable on the class';
+		public $noRegionalChart;
 		public $top_content; //the content. displayed in a custom location. At the top of the page. It is the featured description of the riding.
 
 
@@ -508,16 +508,11 @@ if(!class_exists('DH_Riding_Page'))
 		private function passVoteResultsByParty()
 		{
 			
-			
 			$template_names = get_stylesheet_directory_uri().'single-riding.php';
 			locate_template( $template_names, true, true );
 
 			// javascript CHART - RIDING PAGE
 			add_action( 'wp_enqueue_scripts',  array( $this, 'enqueue_and_register_riding_page' )  );
-
-
-			
-
 			
 		}
 
@@ -539,19 +534,12 @@ if(!class_exists('DH_Riding_Page'))
 
 		public function enqueue_and_register_riding_page()
 		{
-			
-			    wp_register_script( 'ridingPieChart',  get_stylesheet_directory_uri().'/js/ridingPieChart.js' );
 
+
+				wp_register_script( 'ridingPieChart',  get_stylesheet_directory_uri().'/js/ridingPieChart.js' );
 			    
 			    wp_enqueue_script( 'ridingPieChart',  get_stylesheet_directory_uri() . '/js/ridingPieChart.js', array( 'chartjs'), false, true);
 
-
-// $votesByParty['Liberal'] = $custom_fields['wpcf-liberal'][0];
-// 			$votesByParty['Conservative'] = $custom_fields['wpcf-conservative'][0];
-// 			$votesByParty['NDP'] = $custom_fields['wpcf-ndp'][0];
-// 			$votesByParty['Green'] = $custom_fields['wpcf-green'][0];
-// 			$votesByParty['Bloc'] = $custom_fields['wpcf-bloc'][0];
-// 			$votesByParty['Other'] = $custom_fields['wpcf-other'][0];
 			    $data = array(
 				'conVotes'=>$this->votesByParty['Conservative'],//$this->myRiding->conservative, 
 				'libVotes' => $this->votesByParty['Liberal'],//$this->myRiding->liberal,
@@ -566,11 +554,146 @@ if(!class_exists('DH_Riding_Page'))
 
 
 
+
+
 			// history of votes in the region 
-			wp_register_script( 'ridingVoterHistoryChart',  get_stylesheet_directory_uri().'/js/regionalVoterHistory.js' );
+			wp_register_script( 'regionalVoterHistoryChart',  get_stylesheet_directory_uri().'/js/regionalVoterHistory.js' );
+			wp_enqueue_script( 'regionalVoterHistoryChart',  get_stylesheet_directory_uri() . '/js/regionalVoterHistory.js', array( 'chartjs'), false, true);
 
-			wp_enqueue_script( 'ridingVoterHistoryChart',  get_stylesheet_directory_uri() . '/js/regionalVoterHistory.js', array( 'chartjs'), false, true);
 
+
+
+
+
+
+// //  Alberta
+// var ConVotes = [56.5, 47.8,44.0];
+// var LibVotes  = [22.6,22.3,17.0];
+// var NDPVotes = [13.2,21.7,34.0];
+// var GrnVotes = [5.3,13.5,5.0];
+// var titleOfChart = "Alberta";
+
+// //  Sask/Man
+// var ConVotes = [43.7, 40.7,33.5];
+// var LibVotes  = [34.7,35.0,28.5];
+// var NDPVotes = [16.7,18.0,33.0];
+// var GrnVotes = [4.3,6.0,5.0];
+// var titleOfChart = "Saskatchewan and Manitoba";
+
+
+// //  Quebec
+// var ConVotes = [20.3, 14.7,13.0];
+// var LibVotes  = [25.6,25.6,23.5];
+// var NDPVotes = [29.9,38.3,35.5];
+// var GrnVotes = [4.3,3.5,4.0];
+// var BlocVotes = [19.0,16.6,24.0];
+// var titleOfChart = "Quebec";
+
+	// //Atlantic
+	// ConVotes =[24.5,21.9,22.3]
+	// LibVotes  = [52.0,48.6,42.9];
+ // 	NDPVotes = [17.2,20.6,30.1];
+ // 	GrnVotes = [4.7,7.7,4.8];
+ //  	BlocVotes = [];
+			
+			
+				switch ($this->custom_fields['wpcf-province'][0]) {
+				case ($this->custom_fields['wpcf-province'][0] === 'Ontario'):
+					//  Ontario
+				$regional_votes = array(
+					ConVotes => [37.5, 35.7,32.0],
+					LibVotes  => [38.1,33.1,32.0],
+					NDPVotes => [16.7,25.2,31.0],
+					GrnVotes => [5.8,5.1,5.0],
+					BlocVotes => [],
+					titleOfChart =>"Ontario"
+					);
+					break;
+				case ($this->custom_fields['wpcf-province'][0] === 'Newfoundland' || $this->custom_fields['wpcf-province'][0] === 'New Brunswick' || $this->custom_fields['wpcf-province'][0] === 'Prince Edward Island' || $this->custom_fields['wpcf-province'][0] === 'Nova Scotia'):
+					//  Ontario
+				$regional_votes = array(
+					//Atlantic
+					ConVotes =>[24.5,21.9,22.3],
+					LibVotes  => [52.0,48.6,42.9],
+				 	NDPVotes => [17.2,20.6,30.1],
+				 	GrnVotes => [4.7,7.7,4.8],
+				  	BlocVotes => [],
+					titleOfChart => "Atlantic Provinces",
+					);
+
+					break;
+				case ($this->custom_fields['wpcf-province'][0] === 'Quebec'):
+					//  Quebec
+				$regional_votes = array(
+					ConVotes => [20.3, 14.7,13.0],
+					LibVotes  => [25.6,25.6,23.5],
+					NDPVotes => [29.9,38.3,35.5],
+					GrnVotes => [4.3,3.5,4.0],
+					BlocVotes => [19.0,16.6,24.0],
+					titleOfChart => "Quebec",
+					);
+					break;
+				case ($this->custom_fields['wpcf-province'][0] === 'Saskatchewan' || $this->custom_fields['wpcf-province'][0] === 'Manitoba'):
+				 //  Sask/Man
+				$regional_votes = array(
+					ConVotes => [43.7, 40.7,33.5],
+					LibVotes  => [34.7,35.0,28.5],
+					NDPVotes => [16.7,18.0,33.0],
+					GrnVotes => [4.3,6.0,5.0],
+					BlocVotes => [],
+					titleOfChart => "Saskatchewan and Manitoba",
+					);
+					break;
+				case ($this->custom_fields['wpcf-province'][0] === 'Alberta'):
+					//  Alberta
+				$regional_votes = array(
+					ConVotes => [56.5, 47.8,44.0],
+					LibVotes  => [22.6,22.3,17.0],
+					NDPVotes => [13.2,21.7,34.0],
+					GrnVotes => [5.3,13.5,5.0],
+					BlocVotes => [],
+					titleOfChart => "Alberta"
+					);
+					break;
+				case ($this->custom_fields['wpcf-province'][0] === 'British Columbia'):
+					//BC
+					$regional_votes = array(
+					ConVotes => [27.96, 34.13,27],
+					LibVotes  => [38,29.3,23.5],
+					NDPVotes => [21.73,21.96,40],
+					GrnVotes => [9.63,13.53,9.5],
+					BlocVotes => [],
+					titleOfChart => "British Columbia"
+					);
+				break;
+				
+
+
+				default:
+					$this->noRegionalChart = 'We would like to display a chart of polls for the last few months but we do not have polling data for '. $this->custom_fields['wpcf-province'][0].'.' ;
+					break;
+			}
+
+
+
+// // $votesByParty['Liberal'] = $custom_fields['wpcf-liberal'][0];
+// // 			$votesByParty['Conservative'] = $custom_fields['wpcf-conservative'][0];
+// // 			$votesByParty['NDP'] = $custom_fields['wpcf-ndp'][0];
+// // 			$votesByParty['Green'] = $custom_fields['wpcf-green'][0];
+// // 			$votesByParty['Bloc'] = $custom_fields['wpcf-bloc'][0];
+// // 			$votesByParty['Other'] = $custom_fields['wpcf-other'][0];
+
+
+
+				
+			
+// 			
+ 			wp_localize_script( 'regionalVoterHistoryChart', 'voterHistory', $regional_votes );
+
+
+
+			
+			
 		    
 		}
 
