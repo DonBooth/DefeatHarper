@@ -50,9 +50,10 @@ var data = [
 		select: function(event,ui){ 
 			event.preventDefault();
 			//$("#search").val(ui.item.label);
-			$('input[name="item_meta[98]"]').val(ui.item.value);
-			$(this).val(ui.item.label);
-			console.log(ui.item.value + ' ' + ui.item.label ); }
+			$('input[name="item_meta[100]"]').val(ui.item.value); // the value on the form for riding number 
+			$(this).val(ui.item.label); // the value on the form for riding name
+			console.log(ui.item.value + ' ' + ui.item.label ); 
+		}
 	});
 
 

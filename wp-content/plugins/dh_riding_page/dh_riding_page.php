@@ -37,9 +37,11 @@ if(!class_exists('DH_Riding_Page'))
 	{
 		private static $_instance;
 
-
+		private $post_title;
 		public $myRiding;  // the riding object
-		public $theRidingNumber;
+		//public $theRidingNumber;
+		public $candidates;
+		public $ridingNumber;
 		public $ridingErrorMessage; //only returned if there is an error
 		public $votesByParty;
 		public $custom_fields;
@@ -90,7 +92,7 @@ if(!class_exists('DH_Riding_Page'))
 			if ( 'riding' == get_post_type() && !is_admin()) 
 			{
 
-				$this->theRidingNumber = $this->findRidingNumber();
+				$this->ridingNumber = $this->findRidingNumber();
 			}
 			else
 			{return;}
@@ -103,8 +105,9 @@ if(!class_exists('DH_Riding_Page'))
 
 			global $post;
 			$ridingNumber = get_post_meta($post->ID, 'wpcf-riding-number', true);
-			$ridingNumber = $this->validateRidingNumber($ridingNumber);
+			$this->ridingNumber = $this->validateRidingNumber($ridingNumber);
 			$this->assemblePage($ridingNumber);
+
 
 		}
 
@@ -174,7 +177,7 @@ if(!class_exists('DH_Riding_Page'))
 			$this->theRidingNumber = $ridingNumber;
 			$this->top_content = $post->post_content;
 			$this->custom_fields = get_post_custom();
-			  
+			 $this->page_title = $post->post_title;
 			$this->votesByParty = $this->assembleVotesByParty($this->custom_fields);
 			
 			
@@ -194,6 +197,8 @@ if(!class_exists('DH_Riding_Page'))
 
 			 $this->shortRecomendation = $this->findShortRecomendation();
 			 $this->pieChartCaption = $this->pieChartCaption();
+
+			 $this->candidates = $this->findCandidates();
 			
 			
 
@@ -249,7 +254,7 @@ if(!class_exists('DH_Riding_Page'))
 
 		private function createTheRidingObject($theRidingNumber)
 		{
-			$theRidingNumber = (int)$theRidingNumber;
+			$this->theRidingNumber = (int)$theRidingNumber;
 
 			global $wpdb;
 			//prepare the query:
@@ -555,13 +560,27 @@ if(!class_exists('DH_Riding_Page'))
 
 
 
-
+			
 			// history of votes in the region 
 			wp_register_script( 'regionalVoterHistoryChart',  get_stylesheet_directory_uri().'/js/regionalVoterHistory.js' );
 			wp_enqueue_script( 'regionalVoterHistoryChart',  get_stylesheet_directory_uri() . '/js/regionalVoterHistory.js', array( 'chartjs'), false, true);
 
 
+			// make riding name and number available to javascript
+			wp_register_script( 'voter_survey_riding_page',  get_stylesheet_directory_uri().'/js/process-voter-survey-on-riding-pg.js' );
+			wp_enqueue_script( 'voter_survey_riding_page',  get_stylesheet_directory_uri() . '/js/process-voter-survey-on-riding-pg.js', array( 'jquery'), false, true);
 
+
+
+			global $post;
+			$ridingNumber = get_post_meta($post->ID, 'wpcf-riding-number', true);
+			
+			$name_and_number = array(
+				'ridingName'=> $this->page_title,
+
+				'ridingNumber'=> $ridingNumber 
+				);
+			wp_localize_script( 'voter_survey_riding_page', 'name_and_number', $name_and_number );
 
 
 
@@ -685,17 +704,69 @@ if(!class_exists('DH_Riding_Page'))
 
 
 
-				
-			
-// 			
  			wp_localize_script( 'regionalVoterHistoryChart', 'voterHistory', $regional_votes );
 
-
-
-			
 			
 		    
 		}
+
+
+// **************************************************************************************************************
+private function findCandidates()
+{
+
+	//https://represent.opennorth.ca/candidates/house-of-commons/?limit=0&callback=?"
+$plural = 'house-of-commons';
+$set = 'candidates';
+$singular = 'candidate';
+//echo 'remote get';
+//$r = represent_resources_by_set( $set, $plural );
+
+global $post; 
+//echo $post->post_name;
+
+$response = wp_remote_get( "http://represent.opennorth.ca/boundaries/federal-electoral-districts-next-election/$post->post_name/candidates/" );//?format=apibrowser
+if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+    return FALSE;
+	  }
+	
+  $json = json_decode( wp_remote_retrieve_body( $response ),true );
+	  //wp_cache_set( $path, $json, 'represent', strtotime( '+1 week' ) );
+  
+
+ 
+for($i=0; $i < $json['meta'][total_count]; $i++)
+{
+	if( !empty($json['objects'][$i][incumbent])  ) 
+		{$incumbent = 'Incumbent';}
+	else
+	{
+		$incumbent = '&nbsp;';
+	}
+
+	$candidate_url = '';
+
+	if( !empty($json['objects'][$i][personal_url]) )
+	{
+		$candidate_url =  '<p><a href="'.$json['objects'][$i][personal_url].'"><strong>'.$json['objects'][$i][name].'</strong></a></p>'; 
+	}
+	else
+	{
+		$candidate_url = '<strong>'.$json['objects'][$i][name].'</strong>';
+	}
+
+	$candidates .='<div class="col-xs-6 col-sm-4 col-md-2 text-center">'
+	.'<p><strong>'.$incumbent.'</strong></p>'.
+	'<p><strong>'.$json['objects'][$i][party_name].'</strong></p>
+	<div class="visible-xs-block avatar" style="background-image: url('.$json['objects'][$i][photo_url].')"></div>'
+	.$candidate_url.'
+</div>
+';
+}
+ 
+
+	return $candidates;
+}
 
 		
 		

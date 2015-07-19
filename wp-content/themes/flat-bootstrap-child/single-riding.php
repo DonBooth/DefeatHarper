@@ -33,9 +33,11 @@
 */
 
 
-// 	GET myRiding Object
+
 global $wp_query;
 
+// Variables
+$ridingNumber = get_query_var('riding');
 
 
 
@@ -49,21 +51,21 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 
 			<?php echo $ridingErrorMessage; ?>
-			
+		
 			
 <!-- Title and preliminary recomendation -->
-	<div class="row clearfix title-area" >
+	<div class="row clearfix title-area"  >
 		<div class="col-md-3  centered" >
 			
 			<?php 
 			if ( is_user_logged_in() ) 
-				{ ?>
-			<?php echo '<a href=" '. get_site_url().'/voter-survey/' .' ">Have you been asking people how they intend to vote? click here.</a>'; ?>
-			<?php }
+			{
+			echo '<a href=" '. get_site_url().'/voter-survey/' .' ">Have you been asking people how they intend to vote? click here.</a>'; 
+			 }
 
 			else
 			{
-				echo '<a href=" '.  wp_login_url( get_permalink() ) .' " title="Login">Login/Register</a>';
+				echo '<a href=" '.  wp_login_url( get_permalink()) .' " title="Login">Login/Register</a>';
 			}
 			?>
 
@@ -107,6 +109,8 @@ get_header(); ?>
 					<h3 class="ridingPageTitle">About <?php echo get_the_title();  ?></h3>
 			<?php 
 			echo DH_Riding_Page::get_instance()->top_content; 
+			
+			
 			?>
 				</article>
 				
@@ -115,10 +119,151 @@ get_header(); ?>
 
 			
 	</div><!-- row -->
-<div class="row section  clearfix pie-charts">
+
+<div class="row section  clearfix pie-charts" id = 'candidates'>
+<?php echo DH_Riding_Page::get_instance()->candidates; ?>
+</div>
+
+<div class="row section  clearfix pie-charts" id = 'survey'>
+
+<?php 
+
+// changed votes
+// =======================================================================
+global $wpdb;
+$wpdb->flush();
+
+$query3 = "SELECT m1.item_id, m1.meta_value as nextVote, m2.meta_value as prevVote, m3.meta_value as ridingNumber FROM wp_frm_item_metas m1
+INNER JOIN wp_frm_item_metas m2
+  ON m1.item_id=m2.item_id 
+  AND m2.field_id=83
+  AND m1.field_id=85 
+  AND m1.meta_value!=m2.meta_value
+INNER JOIN wp_frm_item_metas m3
+  ON m1.item_id=m3.item_id
+  AND m3.field_id=100
+  AND m3.meta_value=$ridingNumber
+  ";
+
+
+$myBundle = $wpdb->get_results($query3);
+$myBundle = count($myBundle);
+//var_dump( $myBundle );
+//$wpdb->show_errors();
+//$wpdb->print_error();
+//$wpdb->flush();
+//print_r($myBundle);
+//wp_die();
+if(isset($myBundle) && $myBundle >= 1)
+{
+	echo '<strong>'. $myBundle .'</strong>'. ' voters in echo '.get_the_title().' have changed their vote to Defeat Harper.<br>';
+}
+else
+{
+	echo 'Be the first from '.get_the_title().'to vote in our survey.';
+}
+
+//echo '<br> myBundle: '.$myBundle.'<br>';
+//print_r($myBundle);
+//flushes: $wpdb->last_result, $wpdb->last_query, and $wpdb->col_info.
+
+
+//Number of voters collecting votes
+// ======================================================================
+$number_of_voters_voting = FrmProStatisticsController::stats_shortcode(array(
+				'id' => '87', 
+				'type' => 'unique',
+				'user_id' => $user_ID,
+				'entry_id'=>$ridingNumber, //any riding page
+				));//,//'92' =>  'Voter Survey',,//
+
+
+?>
+
+
+
+
 	<div class="col-md-12 center-block" >
 
-	<?php echo FrmFormsController::get_form_shortcode( array( 'id' => 7, 'title' => true, 'description' => false ) ); ?>	
+<?php 
+if($myBundle >= 1)
+{
+
+
+	echo FrmProStatisticsController::graph_shortcode(array(
+	'id' => 103,
+	 '100'=>  $ridingNumber,
+	 'ids'=>'104,105,106,107,108', 
+	 'type'=>'line', 
+	 'x_axis'=>"created_at", 
+	 'curveType'=>'function',
+	 'group_by'=> 'day',
+	 'data_type'=>'total',
+	 'response_count'=> '2000',
+	 'width'=>'90%',
+	 'colors'=>'#0071BC,#FF0000,#F7931E,#00FFFF,#006837,#F7E3A4',
+	 'start_date'=> '2015-04-01',
+	 'end_date'=> '2015-08-01',
+	 'show_key'=>'1',
+	 'title' => get_the_title(). ' '. $ridingNumber,
+	 'curveType'=>'function',
+    
+	 ));  
+}
+
+
+
+// 	var conBlue = '#0071BC,#FF0000,#F7931E,#00FFFF,#006837,#F7E3A4';
+// var ndpOrng = '#F7931E';
+// var libRed  = '#FF0000';
+// var bqBlue  = '#00FFFF';
+// var grnGrn  = '#006837';
+// var neutralColor = '#F7E3A4';
+
+
+
+
+
+			
+	// =======================================================================
+				
+				
+
+			// Did user submit a form - at all? from any riding page?
+			global $user_ID;
+			$votes_by_this_user = FrmProStatisticsController::stats_shortcode(array(
+				'id' => 'hpz3rz', 
+				'type' => 'count',
+				'user_id' => $user_ID,
+				'value'=>'riding', //any riding page
+				));//,//'92' =>  'Voter Survey',,//
+			//echo 'number of submissions from this user (to any riding page): '. $votes_by_this_user;
+
+			 
+			
+
+				if ( is_user_logged_in() ) 
+				{    
+					if($votes_by_this_user > 1)
+					{
+						echo 'Thank you for filling out a voter survey.';
+					}
+					else
+					{
+						echo FrmFormsController::get_form_shortcode( array( 'id' => 7, 'title' => true, 'description' => false ) );
+					}
+					 
+					
+				}
+				else
+				{
+					
+					echo '<a href=" '.  wp_login_url( get_permalink().'#survey'  ) .' " title="Login to vote">You must be logged in to vote. Login/Register</a>';
+					//echo '<a href=" '.  wp_login_url( get_permalink()) .' " title="Login">Login/Register</a>';
+				}
+			//}
+			?>
+
 	</div>
 </div>
 
@@ -133,10 +278,10 @@ get_header(); ?>
 			else
 			{
 
-				echo '<canvas id="voter-history-chart" class="pie-chart" height="400" width="700"  ></canvas>';
+				echo '<canvas id="voter-history-chart" class="pie-chart" height="300" width="600"  ></canvas>';
 				?>
 				<p style= "text-align: left;"><?php echo DH_Riding_Page::get_instance()->shortRecomendation; ?> </p>
-			<?php } ?>
+	  <?php } ?>
 			</div>
 
 			

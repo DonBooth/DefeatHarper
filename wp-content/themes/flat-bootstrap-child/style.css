@@ -61,6 +61,23 @@ neutralColor #F7E3A4
 
 */
 
+ /*ADDED to the represent css so that we can see Candidates on small devices*/
+
+.avatar {
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  margin-bottom: 20px;
+  padding-top: 100%;
+  border-radius: 100%;
+  border: 3px solid #eee;
+  background-color: #eee;
+  background-position: 0% 17%;
+  background-repeat: no-repeat;
+  background-size: 100% auto; /* not same as cover */
+}
+
+
 .title-area{
   background-color: #f9f9f9;
 }

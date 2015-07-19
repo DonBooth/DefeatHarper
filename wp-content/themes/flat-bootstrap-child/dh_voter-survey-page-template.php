@@ -32,12 +32,14 @@ get_header(); ?>
 // WHERE  'field_id' = 87
 // field_id is the userID and the meta_value is the id of the user who submitted the form.
 
- $canvasser = get_current_user_id( );
+ 
 
-
-
-				global $wpdb;
-
+// echo 'the meta: '.(get_page_template_slug( get_the_ID() ));
+// echo ' the meta the other way: '.get_post_meta( get_the_ID(), '_wp_page_template', true );
+// echo '<br> the post meta data '.  '<br>';
+// print_r(get_post_meta( get_the_ID() )) ;
+				
+// ================================================================================
 				// ===>>>>> this will give us the list of ridings to use in the autocomplete.
 				// $ridings = "SELECT  new_name , province, riding_number FROM  dh_ridings ORDER BY  new_name ASC;";//province ASC,
 				// $ridings = $wpdb->get_results($ridings,ARRAY_A);
@@ -57,30 +59,39 @@ get_header(); ?>
 				// 	AND created_at >= ( NOW() - INTERVAL 5 DAY ) ";//
 
 
-				$querystr = "SELECT * 
-					FROM wp_frm_item_metas 
-					WHERE field_id = 87 
-					AND meta_value = $canvasser 
+// ================================================================================
+
+				global $user_ID;
+				
+				if(!current_user_can('administrator')) //$form->id == 7 and 
+				{ 
+				    $five_days_ago = strtotime(current_time('mysql', 1)) - (60*60*24*5); //calculate 5 days ago
+				    $num_surveys = FrmEntry::getRecordCount("it.created_at > '".date('Y-m-d H:i:s', $five_days_ago)."' and user_id=".$user_ID);
+				    //echo 'we can calculate num_surveys '.$num_surveys;
+				}
+				{
+					$num_surveys = 0;
+				}
+				
+
+				// Most recent Survey Date
+				global $wpdb;
+				$querystr = "SELECT id,created_at 
+					FROM wp_frm_items
+					WHERE user_id = $user_ID 
 					AND created_at >= ( NOW() - INTERVAL 5 DAY ) 
-					ORDER BY created_at ASC";//
+					ORDER BY created_at DESC";//
 
 				$surveys = $wpdb->get_results($querystr,ARRAY_A);
 
 				$wpdb->print_error();
+				$wpdb->flush();
 
 				$num_surveys = count($surveys);
-				echo 'count: '.$num_surveys;
-				echo '<br>oldest: '.$surveys[0]['created_at'].'<br>';
-
-				
-
-				//echo '<br>number of surveys left: ';
-				//echo 'count: '. $survey_count[0]['number_of_entries'];
-				echo '<br>';
-				//print_r($surveys);
-				echo '<br>';
-				wp_reset_query();
-
+				$most_recent_survey = $surveys[0]['created_at'];
+				// echo '<br>current: '.current_time('timestamp'). ' last survey: '.strtotime($most_recent_survey);
+				// echo '<br>the difference: '.$theDifference = current_time('timestamp') - strtotime($most_recent_survey);
+				// echo '<br>'. $theDifference/(60*60);
 				?>
 
 				<?php get_template_part( 'content', 'page' ); ?>
@@ -91,13 +102,15 @@ get_header(); ?>
 				{
 					$s_remaining = 5 - $num_surveys;
 					echo '<h3>You may complete up to <strong>'. $s_remaining .'</strong> surveys.</h3>';
-					for( $i=0; $i<$s_remaining; $i++ )
-					{
-						echo '<div class="row section  clearfix pie-charts">';
-						echo '<hr>';
-						echo FrmFormsController::get_form_shortcode( array( 'id' => 7, 'title' => true, 'description' => false ) );
-						echo '</div>';
-					}
+					echo FrmFormsController::get_form_shortcode( array( 'id' => 7, 'title' => true, 'description' => false ) );
+					// display a number of surveys
+					// for( $i=0; $i<$s_remaining; $i++ )
+					// {
+					// 	echo '<div class="row section  clearfix pie-charts">';
+					// 	echo '<hr>';
+					// 	echo FrmFormsController::get_form_shortcode( array( 'id' => 7, 'title' => true, 'description' => false ) );
+					// 	echo '</div>';
+					// }
 
 				}
 				else
@@ -107,7 +120,7 @@ get_header(); ?>
 					echo '<div class=" col-md-12  section   pie-charts ">';
 					echo '<p>';
 					echo 'You have used all of your surveys for now. Please remember that you can enter a maximum of 5 survey results over 5 days.<br>';
-					echo 'You need to wait <strong>' .    human_time_diff( strtotime( $surveys[0]['created_at'] ), current_time('timestamp') ) . '</strong> before you can enter more voter results.';
+					echo 'You need to wait <strong>' . human_time_diff(  current_time('timestamp'), strtotime($most_recent_survey) ) . '</strong> before you can enter more voter results.';
 					echo '<br><small>If you have lots of results and just cannot wait then contact us and we will give you a hand.</small>';
 					echo '<p>';
 					echo '</div>';

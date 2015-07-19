@@ -273,7 +273,7 @@ function my_style_site_name() {
 
 
 
-add_action( 'init', 'get_candidates' );
+//add_action( 'init', 'get_candidates' );
 
 function get_candidates() {
 	$theUrl = 'http://represent.opennorth.ca/boundaries/federal-electoral-districts-next-election/35006/candidates/';
@@ -624,3 +624,9 @@ function get_post_by_title($the_slug = '10001') {
 	
 }
 //add_action( 'init', 'get_post_by_title' );
+
+
+
+
+
+
