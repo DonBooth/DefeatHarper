@@ -38,7 +38,7 @@ header*/
 }
 .site-title, .site-description{
     color: #16a085;
-  text-shadow: 1px 1px 4px rgba(10, 10, 10, 1);
+  /*text-shadow: 1px 1px 4px rgba(10, 10, 10, 1);*/
 }
 /* PUT ANY NEW STYLES TO USE IN YOUR CONTENT AREAS HERE SO YOU CAN EASILY PASTE THIS
  * SECTION IF YOU CHANGE THEMES
@@ -224,5 +224,22 @@ input#address.form-control.input-lg.find-your-riding-fullpage{
    color: #000 !important; 
 }
 
+/*Canvas for map on riding page
+*/
+#riding-map-canvas
+{
+  height: 14em;
+  width: 100%;
+}
+/*Header Login/Logout*/
+#headerLoginLogout{
+  padding: 0.3em 1.5em;
+
+}
+
+/*Center featured-images
+Must use with img-responsive 
+*/
+.img-center {margin:0 auto;}
 
 

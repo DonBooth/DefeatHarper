@@ -226,6 +226,106 @@ var mydata4 = [
   }
 ];
 
+// National
+// $regional_votes = array(
+// ConVotes => [32.4,33.8,29.5],
+// LibVotes  => [33.3,30.2,25.3],
+// NDPVotes => [22.7,22.3,33.4],
+// GrnVotes => [5.2,7.6,5.4],
+// BlocVotes => [32.4,4.4,5.6],
+
+
+var LineChartData = {
+            labels: [
+                "February", "April", "June"
+            ],
+            datasets: [{
+                //fillColor: conBlue,//"rgba(37,116,168,0.1)",
+                strokeColor: conBlue,//"rgba(37,116,168,1)"
+                //pointColor: "rgba(37,116,168,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: [32.4,33.8,29.5],
+                title: "Conservative"
+            }, {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: libRed,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: [33.3,30.2,25.3],
+                title: "Liberal"
+            },
+            {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: ndpOrng,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: [22.7,22.3,33.4],
+                title: "NDP"
+            },
+            {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: grnGrn,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: [5.2,7.6,5.4],
+                title: "Green"
+            },
+            {
+                //fillColor: "rgba(204,46,59,0.1)",
+                strokeColor: bqBlue,//"rgba(204,46,59,1)"
+                //pointColor: "rgba(204,46,59,1)",
+                //markerShape: "circle",
+                //pointStrokeColor: "rgba(255,255,255,1.00)",
+                data: [32.4,4.4,5.6],
+                title: "Bloc"
+            },]
+        };
+
+var LineChartOptions = {
+            canvasBackgroundColor: 'rgba(255,255,255,0.01)',
+            
+            legend: true,
+            
+             legendBlockSize: 15,
+            
+            legendColorIndicatorStrokeWidth: 4,
+           
+            legendBorders: false,
+           
+            graphTitle: "National Voter Polls",
+       
+            graphTitleFontColor: "rgba(52,152,219,1)",
+            graphTitleFontSize: 26,
+          
+            graphSubTitle: "Rough average of polls from Election Almanac",
+      
+            graphSubTitleFontColor: "rgba(102,102,102,1)",
+            graphSubTitleFontSize: 16,
+    
+            datasetFill: false,
+           
+            bezierCurve: true,
+            bezierCurveTension: 0.2,
+           
+            pointDot: false,
+            barShowStroke: false,
+           
+            // //responsive settings:
+            responsive:true,
+            maintainAspectRatio : true,
+            responsiveMinWidth : 300,
+             
+            };
+
+
+
+
+
+
 window.onload = function(){
 
 
@@ -237,8 +337,12 @@ window.onload = function(){
 		//});
 		var myPie1 = new Chart(document.getElementById("chart-01").getContext("2d")).Pie(mydata1,opt1);
 		var myPie2 = new Chart(document.getElementById("chart-02").getContext("2d")).Pie(mydata2,opt2);
-    var myPie3 = new Chart(document.getElementById("chart-03").getContext("2d")).Pie(mydata3,opt3);
-    var myPie4 = new Chart(document.getElementById("chart-04").getContext("2d")).Pie(mydata4,opt3);
+   // var myPie3 = new Chart(document.getElementById("chart-03").getContext("2d")).Pie(mydata3,opt3);
+    //var myPie4 = new Chart(document.getElementById("chart-04").getContext("2d")).Pie(mydata4,opt3);
+    var myLine  = new Chart(document.getElementById("national-line-chart").getContext("2d")).Line(LineChartData,LineChartOptions);
+                      //Chart(document.getElementById(ChartId).getContext("2d")).'+ChartType+'(ChartData,ChartOptions);document.getElementById(ChartId).getContext("2d").stroke();')
+
+
 		//var myPie = new Chart(document.getElementById("chart-03").getContext("2d")).Pie(mydata2,opt3);
 		// var ctx2 = document.getElementById("chart-02").getContext("2d");
 		// window.myBar = new Chart(ctx2).Line(barChartData, {

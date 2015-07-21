@@ -37,6 +37,7 @@
 		if ( $custom_header_location == 'header' ) :
 		?>
 			<div id="site-branding" class="site-branding">
+				<div class="pull-right" id="headerLoginLogout"><?php wp_loginout($_SERVER['REQUEST_URI'] ) ?></div>
 				<center>
 		
 			<?php

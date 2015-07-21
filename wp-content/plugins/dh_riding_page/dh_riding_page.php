@@ -584,37 +584,6 @@ if(!class_exists('DH_Riding_Page'))
 
 
 
-
-// //  Alberta
-// var ConVotes = [56.5, 47.8,44.0];
-// var LibVotes  = [22.6,22.3,17.0];
-// var NDPVotes = [13.2,21.7,34.0];
-// var GrnVotes = [5.3,13.5,5.0];
-// var titleOfChart = "Alberta";
-
-// //  Sask/Man
-// var ConVotes = [43.7, 40.7,33.5];
-// var LibVotes  = [34.7,35.0,28.5];
-// var NDPVotes = [16.7,18.0,33.0];
-// var GrnVotes = [4.3,6.0,5.0];
-// var titleOfChart = "Saskatchewan and Manitoba";
-
-
-// //  Quebec
-// var ConVotes = [20.3, 14.7,13.0];
-// var LibVotes  = [25.6,25.6,23.5];
-// var NDPVotes = [29.9,38.3,35.5];
-// var GrnVotes = [4.3,3.5,4.0];
-// var BlocVotes = [19.0,16.6,24.0];
-// var titleOfChart = "Quebec";
-
-	// //Atlantic
-	// ConVotes =[24.5,21.9,22.3]
-	// LibVotes  = [52.0,48.6,42.9];
- // 	NDPVotes = [17.2,20.6,30.1];
- // 	GrnVotes = [4.7,7.7,4.8];
- //  	BlocVotes = [];
-			
 			
 				switch ($this->custom_fields['wpcf-province'][0]) {
 				case ($this->custom_fields['wpcf-province'][0] === 'Ontario'):
@@ -686,10 +655,16 @@ if(!class_exists('DH_Riding_Page'))
 					);
 				break;
 				
-
-
 				default:
-					$this->noRegionalChart = 'We would like to display a chart of polls for the last few months but we do not have polling data for '. $this->custom_fields['wpcf-province'][0].'.' ;
+					// National
+					$regional_votes = array(
+					ConVotes => [32.4,33.8,29.5],
+					LibVotes  => [33.3,30.2,25.3],
+					NDPVotes => [22.7,22.3,33.4],
+					GrnVotes => [5.2,7.6,5.4],
+					BlocVotes => [32.4,4.4,5.6],
+					titleOfChart => "National results (no regional results available)"
+					);
 					break;
 			}
 
@@ -705,6 +680,27 @@ if(!class_exists('DH_Riding_Page'))
 
 
  			wp_localize_script( 'regionalVoterHistoryChart', 'voterHistory', $regional_votes );
+
+
+
+
+
+ 			// MAP with kml
+ 			// the maps api
+ 			// my api key AIzaSyD7ZoQsWsTQox_zsm0fULaWh6ix4DRzsJQ
+			//$response = wp_remote_get( "http://represent.opennorth.ca/boundaries/federal-electoral-districts-next-election/$post->post_name/candidates/" );//?format=apibrowser
+			// if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) 
+			// {
+			//     return FALSE;
+			// }
+
+
+			wp_register_script( 'google_api',  'https://maps.googleapis.com/maps/api/js?key=AIzaSyD7ZoQsWsTQox_zsm0fULaWh6ix4DRzsJQ' );
+			wp_enqueue_script( 'google_api',   'https://maps.googleapis.com/maps/api/js?key=AIzaSyD7ZoQsWsTQox_zsm0fULaWh6ix4DRzsJQ', array( ), false, true);
+			wp_register_script( 'kml_map',  get_stylesheet_directory_uri().'/js/map_with_kml.js'  );
+			wp_enqueue_script( 'kml_map',  get_stylesheet_directory_uri().'/js/map_with_kml.js'  , array( 'google_api','voter_survey_riding_page'), false, true);
+			//src = 'http://represent.opennorth.ca/boundaries/federal-electoral-districts-next-election/'+ridingNumber+'/simple_shape?format=kml';
+
 
 			
 		    

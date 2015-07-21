@@ -25,38 +25,64 @@ get_header(); ?>
 			</div>
 	</div>
 
-	<div class="row top-section centered clearfix ">
+	<div class="row top-section pie-charts centered clearfix ">
 		<!-- <h2 >Most Canadians did not vote for Stephen Harper's Conservatives</h2> 
 		<br/>-->
-			<div class="col-md-6 center-block pie-charts">
-				<center>
+			<div class="col-md-6 center-block ">
+				
 				<h3 style= "text-align: center;">In 2011 Canadians voted for parties from the left, centre and right.</h3>
-				<br>
+				<center>
 				<canvas id="chart-01"  height="300" width="500">This graphic shows that 39% voted Conservative while 31% voted NDP, 12% voted Liberal, 12% voted Bloc Quebequois, and 4% voted Green. </canvas>
 				</center>
 				
 			</div>
 
-			<div class="col-md-6  center-block pie-charts">
+			
+			
+			<div class="col-md-6  center-block ">
 				<center>
 				<h3 style= "text-align: center;" >The majority of us did not vote for Stephen Harper or the Conservatives.</h3>
 				<br>
 				<canvas id="chart-02"  height="300" width="500">This graphic shows that 61% of voters voted for centre or progressive parties.</canvas>
 				</center>
+				<p>The Conservatives won in over half the ridings in Canada because we split our votes among the other parties.</p>
+			</div>
+
+			<h2 style= "text-align: center;">The Conservatives won 39% of the vote but got 100% of the power.</h2>
+			<p>The Conservatives won in over half the ridings in Canada because we split our votes among the other parties.</p>
+			<h2><strong>We can't let it happen again.</strong></h2>
+	</div><!-- row -->
+
+	<!-- Second Row -->
+	<div class="row top-section centered clearfix ">
+		<!-- <h2 >Most Canadians did not vote for Stephen Harper's Conservatives</h2> 
+		<br/>-->
+			<div class="col-md-6 center-block pie-charts">
+				
+				
+				<p>In early Summer 2015 the polls are very encouraging.<br>
+					We're seeing support for the Conservatives slip.
+				</p>
+				
+				<canvas id="national-line-chart"  height="300" width="500">This chart shows that, nationally, snce April the Conservatives and Liberals have been losing support while the NDP has gained.</canvas>
+				<div><a href = "http://www.electionalmanac.com/ea/"><small>source: Election Almanac</small></a></div>
+				
+			</div>
+
+			<div class="col-md-6  pie-charts">
+				<img class="img-responsive img-center" src=" <?php echo get_stylesheet_directory_uri(); ?>/images/you_wont_recognize.jpg" />
+				<p style= "text-align: left;" >However, national polls are a poor predictor of riding-by-riding results. Each riding is different.</p>
+				
+				
 				
 			</div>
 	</div><!-- row -->
 
-
-<div class="row section clearfix">
-	<div class="col-lg-12 content-area-wide">
-		<p>The Conservatives won in over half the ridings in Canada because we split our votes among the other parties.</p>
-		<p>The Conservatives got 39% of the vote but 100% of the power.</p>
-	</div>
-</div><!-- row -->
-
-
-
+<div class="row top-section pie-charts clearfix ">
+	<h2><strong>With your help, people in your riding can make a more informed decision.</strong></h2>
+	<p>While we can provide some basic information about the candidates in your riding and how people voted in the last election, you can contribute more relevant information: how you plan to vote, how others you know plan to vote. The most valuable contribution of all will be when you ask a few complete strangers how they plan to vote - or whether they will.</p>
+	<p>To start the process</p>
+<div>
 
 
 
@@ -71,21 +97,18 @@ get_header(); ?>
 	<div class="container">
 
 
-		<h2 class="widget-title">How many votes it will take to defeat your local Conservative?</h2>
+		
 		<div class="textwidget">
 		<div class="row widget_text section centered clearfix  find-your-riding-fullpage">
 		<div class="col-lg-8 col-lg-offset-2">
 		
 
 
-
 		<!-- test from represent nother demo site. -->
-    <h3>
-       <span class="hidden-xxs">Find your riding</span><!-- <span class="visible-xxs"> </span>-->
-    </h3>
+    <h3 class="hidden-xxs">Find your riding</h3>
     <form class="form-inline  find-your-riding-fullpage" role="form">
-      <label class="sr-only" for="address">Enter an address</label>
-      <input type="text" class="form-control input-lg find-your-riding-fullpage" id="address" placeholder="Enter an address">
+      <label for="address">Enter an address, street, province  -  or enter postal code</label>
+      <input type="text" class="form-control input-lg find-your-riding-fullpage" id="address" placeholder="Enter an address or postal code">
       <button class="btn btn-lg btn-primary" id="submit">
         <span class="glyphicon glyphicon-search"></span> Find
       </button>
@@ -122,41 +145,9 @@ get_header(); ?>
 
 <div class="container section">
 
-		<!-- <div class="row section clearfix">
-			<div class="col-lg-8 col-lg-offset-2  content-area-wide">
-				<h3 id="click600People" class="hvr-push section centered clearfix yellowBackground">What if one in 600 people voted differently?<br>(click to find out)</h3>
-			</div>
-		</div> --> 
-
 		
 		
-		<div class="row clearfix" >
-		<div class="col-lg-12  pie-charts" id="if600voteddifferently"><!-- initiallyHidden -->
-		<h3 id="click600People" class=" centered clearfix ">What if one in 20 or even one in 50 people voted differently?</h3>
-		<p>If everyone votes exactly as they did in 2011, Harper’s Conservatives will get another majority. If a small percentage of Canadians vote for their second choice non-Conservative candidate, the picture could look very different.</p><br>
-		
-
-
-		  <div class="col-md-6 center-block pie-charts">
-				<center>
-				<h3 style= "text-align: center;">1 in 50</h3>
-				<br>
-				<canvas id="chart-03"  height="300" width="500">This graphic shows that 39% voted Conservative while 31% voted NDP, 12% voted Liberal, 12% voted Bloc Quebequois, and 4% voted Green. </canvas>
-				</center>
-				<p style="test-align:left;">If 1 in 50 voters, spaced evenly across the country, change their vote to the party most likely to beat the local Conservative then the Conservatives will have a minority government and will be forced to work with other parties.</p>
-			</div>
-
-			<div class="col-md-6  center-block pie-charts">
-				<center>
-				<h3 style= "text-align: center;" >1 in 20</h3>
-				<br>
-				<canvas id="chart-04"  height="300" width="500">This graphic shows that 61% of voters voted for centre or progressive parties.</canvas>
-				</center>
-				<p style="test-align:left;">If 1 in 20 voters, spread evenly across the country, change their vote to the party most likely to defeat the local Conservative candidate then the NDP will form a minority government.</p>
-			</div>
-		</div><!-- col-lg-12-->
-		</div><!-- row -->
-
+	
 		<!-- new row - make your vote count. -->
 		<div class="row section clearfix">
 	<div class="col-lg-10 col-lg-offset-2  content-area-wide clearfix" >

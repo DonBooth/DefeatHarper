@@ -86,9 +86,7 @@ get_header(); ?>
 			<p>It is still early. Things may change. They often do.</p>
 			</div><!-- ridingHeader -->
 		</div><!-- col-lg-12 -->
-		<div class="col-md-3  centered" >
-			map goes here.
-		</div>
+		
 
 	</div><!-- row -->
 
@@ -119,6 +117,11 @@ get_header(); ?>
 
 			
 	</div><!-- row -->
+<!-- riding map -->
+<div class="col-md-3  centered" id="riding-map-canvas" >
+	
+		
+</div>
 
 <div class="row section  clearfix pie-charts" id = 'candidates'>
 <?php echo DH_Riding_Page::get_instance()->candidates; ?>
@@ -156,7 +159,7 @@ $myBundle = count($myBundle);
 //wp_die();
 if(isset($myBundle) && $myBundle >= 1)
 {
-	echo '<strong>'. $myBundle .'</strong>'. ' voters in echo '.get_the_title().' have changed their vote to Defeat Harper.<br>';
+	echo '<strong>'. $myBundle .'</strong>'. ' voters in '.get_the_title().' have changed their vote to Defeat Harper.<br>';
 }
 else
 {
